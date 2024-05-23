@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html style=" height: 100%;">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Категории товаров</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-light snav">
+        <div class="container-fluid snav">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/img/orders.png}" alt="" width="80" height="80"/>
+            </a>
+            <h2 class="whitetext">Подсистема учета заказов</h2>
+            <form th:action="@{/logout}" method="post">
+                <button class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px" th:text="${account}" type="submit"></button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-start ">
+            <div class="col-8 border bg-light px-4">
+                <h3 class="text-dark">Категории товаров</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="var : ${productCategories}">
+                        <td th:text="${var.getId()}"></td>
+                        <td th:text="${var.getCategory_name()}"></td>
+                        <td th:text="${var.getDescription()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 border px-4">
+                <form method="POST" th:action="@{/ProductCategory/update_two}" th:object="${productCategory}">
+                    <h3 style="color: black">Редактирование записи</h3>
+                    <div class="mb-3">
+                        <div class="col-sm-6">
+                            <label for="id" class="col-sm-5 col-form-label" style="color: black">ID</label>
+                            <input type="text" name="id" readonly class="form-control" id="id" th:field="*{id}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></div>
+
+                            <label for="category_name" class="col-sm-5 col-form-label" style="color: black">Название</label>
+                            <input type="text" name="category_name" class="form-control" id="category_name" th:field="*{category_name}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('category_name')}" th:errors="*{category_name}"></div>
+
+                            <label for="description" class="col-sm-5 col-form-label" style="color: black">Описание</label>
+                            <input type="text" name="description" class="form-control" id="description" th:field="*{description}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+
+                        </div>
+                    </div>
+                    <p>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Редактировать</button>
+                        <a href="/ProductCategory"><button type="button" class="btn btn-primary">Отмена</button></a>
+                        <br>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

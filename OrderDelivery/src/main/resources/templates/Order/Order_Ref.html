@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html style=" height: 100%;">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Заказы</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-light snav">
+        <div class="container-fluid snav">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/img/orders.png}" alt="" width="80" height="80"/>
+            </a>
+            <h2 class="whitetext">Подсистема учета заказов</h2>
+            <form th:action="@{/logout}" method="post">
+                <button class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px" th:text="${account}" type="submit"></button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-start ">
+            <div class="col-8 border bg-light px-4">
+                <h3 class="text-dark">Заказы</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Заказчик</th>
+                        <th scope="col">Сотрудник</th>
+                        <th scope="col">Заказано</th>
+                        <th scope="col">Доставка</th>
+                        <th scope="col">Компания</th>
+                        <th scope="col">Адрес</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="var : ${orders}">
+                        <td th:text="${var.getId()}"></td>
+                        <td th:text="${var.getCustomer()}"></td>
+                        <td th:text="${var.getEmployee()}"></td>
+                        <td th:text="${var.getOrder_date()}"></td>
+                        <td th:text="${var.getShip_date()}"></td>
+                        <td th:text="${var.getShip_name()}"></td>
+                        <td th:text="${var.getShip_address()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 border px-4">
+                <form method="POST" th:action="@{/Order/update_two}" th:object="${order}">
+                    <h3 style="color: black">Редактирование записи</h3>
+                    <div class="mb-3">
+                        <div class="col-sm-6">
+
+                            <label for="id" class="col-sm-5 col-form-label" style="color: black">ID</label>
+                            <input type="text" name="id" readonly class="form-control" id="id" th:field="*{id}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></div>
+
+                            <label for="customer" class="col-sm-5 col-form-label" style="color: black">Заказчик</label>
+                            <input type="text" name="customer" class="form-control" id="customer" th:field="*{customer}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}"></div>
+
+                            <label for="employee" class="col-sm-5 col-form-label" style="color: black">Сотрудник</label>
+                            <input type="text" name="employee" class="form-control" id="employee" th:field="*{employee}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}"></div>
+
+                            <label for="order_date" class="col-sm-5 col-form-label" style="color: black">Дата заказа</label>
+                            <input type="date" name="order_date" class="form-control" id="order_date" th:field="*{order_date}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('order_date')}" th:errors="*{order_date}"></div>
+
+                            <label for="ship_date" class="col-sm-5 col-form-label" style="color: black">Дата доставки</label>
+                            <input type="date" name="ship_date" class="form-control" id="ship_date" th:field="*{ship_date}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('ship_date')}" th:errors="*{ship_date}"></div>
+
+                            <label for="ship_name" class="col-sm-5 col-form-label" style="color: black">Доставляющая компания</label>
+                            <input type="text" name="ship_name" class="form-control" id="ship_name" th:field="*{ship_name}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('ship_name')}" th:errors="*{ship_name}"></div>
+
+                            <label for="ship_address" class="col-sm-5 col-form-label" style="color: black">Адрес доставки</label>
+                            <input type="text" name="ship_address" class="form-control" id="ship_address" th:field="*{ship_address}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('ship_address')}" th:errors="*{ship_address}"></div>
+
+                        </div>
+                    </div>
+                    <p>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Редактировать</button>
+                        <a href="/Order"><button type="button" class="btn btn-primary">Отмена</button></a>
+                        <br>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+.snav{background: #178fb4;}
+.whitetext{color: white;}
+.item:hover{background: #178fb4;}
+.item{background: #2ca3e3;}
+.hrefitem:hover{color: white;}
+.hrefitem{color: white;}
+.bodys {
+    margin: 0;
+    background: #2f3130;
+    color: #fff;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+.html{background: #6c6c6c;}
+.btnlog{
+    background: #2ca3e3;
+    border: transparent 3px solid;
+    border-radius: 10px;
+    font-size: 17px
+}
+.btnlog:hover{
+    background: #178fb4;
+    border: #2ca3e3 3px inset;
+    font-size: 17px
+}
+.createac{
+    color: white;
+}
+.createac:hover{
+    color: #1d3246;
+}
+.auth{
+    background: #178fb4;
+    border: 45px solid #178fb4;
+    border-radius: 30px;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html style=" height: 100%;">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Товары</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-light snav">
+        <div class="container-fluid snav">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/img/orders.png}" alt="" width="80" height="80"/>
+            </a>
+            <h2 class="whitetext">Подсистема учета заказов</h2>
+            <form th:action="@{/logout}" method="post">
+                <button class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px" th:text="${account}" type="submit"></button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-start ">
+            <div class="col-8 border bg-light px-4">
+                <h3 class="text-dark">Товары</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Категория</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Цена за шт.</th>
+                        <th scope="col">На складе</th>
+                        <th scope="col">В заказе</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="var : ${products}">
+                        <td th:text="${var.getId()}"></td>
+                        <td th:text="${var.getProductCategory().getCategory_name()}"></td>
+                        <td th:text="${var.getProduct_name()}"></td>
+                        <td th:text="${var.getUnit_price()}"></td>
+                        <td th:text="${var.getIn_stock()}"></td>
+                        <td th:text="${var.getIn_order()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 border px-4">
+                <form method="POST" th:action="@{/Product/update_two}" th:object="${product}">
+                    <h3 style="color: black">Редактирование записи</h3>
+                    <div class="mb-3">
+                        <div class="col-sm-6">
+
+                            <label for="id" class="col-sm-5 col-form-label" style="color: black">ID</label>
+                            <input type="text" name="id" readonly class="form-control" id="id" th:field="*{id}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></div>
+
+                            <label for="productCategory" class="col-sm-5 col-form-label">Категория</label>
+                            <div class="col-sm-7">
+                                <select style="width: 200%" th:field="*{productCategory.id}" name="productCategory" id="productCategory"
+                                        class="form-control">
+                                    <option th:value="-1">Выберите категорию товаров</option>
+                                    <option th:each="var : ${productCategories}" th:value="${var.getId()}"
+                                            th:text="${var.getCategory_name()}"></option>
+                                </select>
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('productCategory')}"
+                                     th:errors="*{productCategory}"></div>
+                            </div>
+
+                            <label for="product_name" class="col-sm-5 col-form-label" style="color: black">Название</label>
+                            <input type="text" name="product_name" class="form-control" id="product_name" th:field="*{product_name}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('product_name')}" th:errors="*{product_name}"></div>
+
+                            <label for="unit_price" class="col-sm-5 col-form-label" style="color: black">Цена за шт.</label>
+                            <input type="number" name="unit_price" class="form-control" id="unit_price" th:field="*{unit_price}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('unit_price')}" th:errors="*{unit_price}"></div>
+
+                            <label for="in_stock" class="col-sm-5 col-form-label" style="color: black">Кол-во на складе</label>
+                            <input type="number" name="in_stock" class="form-control" id="in_stock" th:field="*{in_stock}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('in_stock')}" th:errors="*{in_stock}"></div>
+
+                            <label for="in_order" class="col-sm-5 col-form-label" style="color: black">Кол-во в заказе</label>
+                            <input type="number" name="in_order" class="form-control" id="in_order" th:field="*{in_order}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('in_order')}" th:errors="*{in_order}"></div>
+                        </div>
+                    </div>
+                    <p>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Редактировать</button>
+                        <a href="/Product"><button type="button" class="btn btn-primary">Отмена</button></a>
+                        <br>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

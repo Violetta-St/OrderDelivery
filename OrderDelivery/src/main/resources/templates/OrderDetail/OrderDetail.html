@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html style=" height: 100%;">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Детали заказов</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-light snav">
+        <div class="container-fluid snav">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/img/orders.png}" alt="" width="80" height="80"/>
+            </a>
+            <h2 class="whitetext">Подсистема учета заказов</h2>
+            <form th:action="@{/logout}" method="post">
+                <button class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px" th:text="${account}" type="submit"></button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-start ">
+            <div class="col-8 border bg-light px-4">
+                <h3 class="text-dark">Детали заказов</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Товар</th>
+                        <th scope="col">Заказ</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Скидка</th>
+                        <th scope="col">Редактировать</th>
+                        <th scope="col">Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="var : ${orderDetails}">
+                        <td th:text="${var.getId()}"></td>
+                        <td th:text="${var.getProduct().getProduct_name()}"></td>
+                        <td th:text="${var.getOrders().getOrderDesc()}"></td>
+                        <td th:text="${var.getPrice()}"></td>
+                        <td th:text="${var.getDiscount()}"></td>
+                        <td>
+                            <form action="#" th:action="@{/OrderDetail/update_one}" th:object="${var}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <input name="discount" type="hidden" th:value="${var.getDiscount()}"/>
+                                <input name="product" type="hidden" th:value="${var.getProduct().id}"/>
+                                <input name="orders" type="hidden" th:value="${var.getOrders().id}"/>
+                                <button type="submit" class="btn btn-outline-primary"><img th:src="@{/img/refactor.png}"/></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{/OrderDetail/delete}" th:object="${var}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <button type="submit" class="btn btn-outline-primary"><img th:src="@{/img/remove.png}"/></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 border px-4">
+                <form method="POST" th:action="@{/OrderDetail/create}" th:object="${orderDetail}">
+                    <h3 style="color: black">Новая запись</h3>
+                    <div class="mb-3">
+                        <div class="col-sm-6">
+
+                            <label for="product" class="col-sm-5 col-form-label">Товар</label>
+                            <div class="col-sm-7">
+                                <select style="width: 200%" th:field="*{product.id}" name="product" id="product"
+                                        class="form-control">
+                                    <option th:value="-1">Выберите товар</option>
+                                    <option th:each="var : ${productList}" th:value="${var.getId()}"
+                                            th:text="${var.getProduct_name()}"></option>
+                                </select>
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('product')}"
+                                     th:errors="*{product}"></div>
+                            </div>
+
+                            <label for="orders" class="col-sm-5 col-form-label">Заказ</label>
+                            <div class="col-sm-7">
+                                <select style="width: 200%" th:field="*{orders.id}" name="orders" id="orders"
+                                        class="form-control">
+                                    <option th:value="-1">Выберите заказ</option>
+                                    <option th:each="var : ${ordersList}" th:value="${var.getId()}"
+                                            th:text="${var.getOrderDesc()}"></option>
+                                </select>
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('orders')}"
+                                     th:errors="*{orders}"></div>
+                            </div>
+
+                            <label for="discount" class="col-sm-5 col-form-label" style="color: black">Скидка</label>
+                            <input type="text" name="discount" class="form-control" id="discount" th:field="*{discount}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('discount')}" th:errors="*{discount}"></div>
+
+                        </div>
+                    </div>
+                    <p>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <br>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
