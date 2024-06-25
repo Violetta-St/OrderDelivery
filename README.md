@@ -153,7 +153,48 @@ ALTER TABLE IF EXISTS public.user_model
 
 OWNER to postgres;
 
-После запуска кода, обновляете базу данны и на этом пустая база данных готова к работе.
+INSERT INTO public.product_category(category_name, description)
+VALUES ('Бытовая техника','Все для дома и дачи');
+INSERT INTO public.product_category(category_name, description)
+VALUES ('Смартфоны','Смартфоны и гаджеты');
+INSERT INTO public.product_category(category_name, description)
+VALUES ('ПК, ноутбуки и периферия','Обустрой свое рабочее место!');
+
+INSERT INTO public.product(product_category_id, product_name, unit_price, in_stock, in_order)
+VALUES (1, 'Стиральная машина Samsung', 28600, 12, 1);
+INSERT INTO public.product(product_category_id, product_name, unit_price, in_stock, in_order)
+VALUES (1, 'Духовой шкаф Indesit', 14900, 20, 1);
+INSERT INTO public.product(product_category_id, product_name, unit_price, in_stock, in_order)
+VALUES (2, 'Apple iPhone 15 Pro Max 256 Titanium', 143900, 17, 1);
+INSERT INTO public.product(product_category_id, product_name, unit_price, in_stock, in_order)
+VALUES (2, 'Samsung Galaxy S24 Ultra 512gb', 124900, 13, 1);
+INSERT INTO public.product(product_category_id, product_name, unit_price, in_stock, in_order)
+VALUES (3, 'Игровой Ноутбук Asus Predator', 119000, 12, 1);
+INSERT INTO public.product(product_category_id, product_name, unit_price, in_stock, in_order)
+VALUES (3, 'ПК Ardor Gaming Patrol I5 12400F RTX4060Ti', 105000, 3, 1);
+
+INSERT INTO public.orders(customer, employee, order_date, ship_date, ship_name, ship_address)
+VALUES ('Литвинова Оксана Сергеевна','Егоркина Анна Владиславовна','2024-06-10','2024-06-15','Курьерская служба','Малюгина 23/2');
+INSERT INTO public.orders(customer, employee, order_date, ship_date, ship_name, ship_address)
+VALUES ('Варфоломеев Егор Александрович','Егоркина Анна Владиславовна','2024-06-11','2024-06-12','Boxberry','Нансена 101/1');
+INSERT INTO public.orders(customer, employee, order_date, ship_date, ship_name, ship_address)
+VALUES ('Муратов Владимир Игоревич','Егоркина Анна Владиславовна','2024-06-12','2024-05-13','SDEK','Станиславского 119');
+
+INSERT INTO public.order_detail(product_id, orders_id, price, discount)
+VALUES (1, 1, 28600, '10%');
+INSERT INTO public.order_detail(product_id, orders_id, price, discount)
+VALUES (2, 1, 14900, '10%');
+INSERT INTO public.order_detail(product_id, orders_id, price, discount)
+VALUES (3, 2, 143900, '5%');
+INSERT INTO public.order_detail(product_id, orders_id, price, discount)
+VALUES (5, 2, 119000, '5%');
+INSERT INTO public.order_detail(product_id, orders_id, price, discount)
+VALUES (4, 3, 124900, '5%');
+INSERT INTO public.order_detail(product_id, orders_id, price, discount)
+VALUES (6, 3, 105000, '5%');
+
+После запуска кода, обновляете базу данны и на этом база данных с тестовыми данными готова к работе.
+#Важно! Пользоваетль не создается автоматически! Его нужно зарегистрировать после запуска приложения.
 
 Далее переходите в проекте в файл application.properties, в котором неоходимо поменять пароль к базе данных в поле
 
